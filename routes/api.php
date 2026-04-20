@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use \App\Http\Controllers\Api\Keys\CloudinaryController;
 use \App\Http\Controllers\Api\Keys\PublicKeysController;
-use \App\Http\Controllers\Api\cloudinary\CloudinaryFileController;
+use \App\Http\Controllers\Api\cloudinary\CloudinaryFilesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 // cloudinary routes
-Route::post('/cloudinary/upload', [CloudinaryFileController::class, 'uploadFile'])->name('cloudinary.upload');
+Route::post('/cloudinary/upload', [CloudinaryFilesController::class, 'uploadFile'])->name('cloudinary.upload');
+Route::get('/cloudinary/files', [CloudinaryFilesController::class, 'listFiles'])->name('cloudinary.files');
+Route::delete('/cloudinary/files', [CloudinaryFilesController::class, 'deleteFiles'])->name('cloudinary.files.delete');
