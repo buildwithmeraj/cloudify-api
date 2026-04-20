@@ -44,3 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/cloudinary/upload', [CloudinaryFilesController::class, 'uploadFile'])->name('cloudinary.upload');
 Route::get('/cloudinary/files', [CloudinaryFilesController::class, 'listFiles'])->name('cloudinary.files');
 Route::delete('/cloudinary/files', [CloudinaryFilesController::class, 'deleteFiles'])->name('cloudinary.files.delete');
+
+
+// fallback route for undefined API endpoints
+Route::fallback(function () {
+    return response()->json(['message' => 'Endpoint not found.'], 404);
+});
