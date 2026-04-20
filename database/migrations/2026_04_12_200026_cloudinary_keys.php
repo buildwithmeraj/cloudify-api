@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('cloudinary_api_keys', function (Blueprint $table) {
             $table->id();
             $table->text('user_id')->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('key', 64)->unique();
             $table->text('name');
+            $table->string('key', 64)->unique();
+            $table->string('secret', 64)->unique();
             $table->timestamps();
         });
     }

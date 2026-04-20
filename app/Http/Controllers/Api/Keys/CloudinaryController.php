@@ -21,6 +21,7 @@ class CloudinaryController extends Controller
         // validate the request
         $validate = $request->validate([
             'key' => ['required', 'string'],
+            'secret' => ['required', 'string'],
             'name'    => ['required', 'string'],
         ]);
         // add the user id to the validated data
