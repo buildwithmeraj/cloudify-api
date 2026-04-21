@@ -19,7 +19,7 @@ class CloudinaryFilesController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'images' => 'required|array|min',
+            'images' => 'required|array|min:1',
             'images.*' => 'required|file|mimes:jpg,jpeg,png,webp,gif,svg,avif',
         ]);
 

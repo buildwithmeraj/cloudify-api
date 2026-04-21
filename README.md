@@ -1,58 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# <img src="public/assets/cloudify-icon.svg" alt="Cloudify Icon" width="36" /> Cloudify API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Cloudify API is a Laravel-based backend for authentication, API key management, and Cloudinary file operations.
 
-## About Laravel
+## Live Frontend
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- https://cloudify.meraj.pro
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Docs
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- https://cloudify.meraj.pro/docs
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- User authentication with Laravel Sanctum (`register`, `login`, `logout`, `me`)
+- Google OAuth login flow with Socialite
+- Per-user Cloudinary credential management
+- Per-user public API key management
+- File upload to Cloudinary via public API key
+- File listing and deletion by logical `name` group
+- Subdirectory hosting support (for example `/cloudify/api`)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech Stack
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP `^8.3`
+- Laravel `^13`
+- Laravel Sanctum
+- Laravel Socialite
+- Cloudinary PHP SDK
+- MariaDB/MySQL (default)
 
-## Agentic Development
+## Project Structure
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- `routes/api.php`: API routes
+- `routes/web.php`: Google OAuth endpoints and web fallback
+- `app/Http/Controllers/Api/Auth`: auth controllers
+- `app/Http/Controllers/Api/Keys`: key management controllers
+- `app/Http/Controllers/Api/Cloudinary`: file upload/list/delete controller
+- `database/migrations`: database schema
+- `.htaccess`: root-to-`public` rewrite for shared hosting
+
+## Installation
+
+1. Clone the repository.
+2. Install PHP dependencies.
+3. Create `.env`.
+4. Generate app key.
+5. Configure database.
+6. Run migrations.
+7. Start the app.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Environment Configuration
 
-## Contributing
+At minimum, configure these values in `.env`:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+APP_NAME=Cloudify API
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
 
-## Code of Conduct
+DB_CONNECTION=mariadb
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cloudify_api
+DB_USERNAME=root
+DB_PASSWORD=
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+FRONTEND_URL=http://localhost:3000
 
-## Security Vulnerabilities
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+For Sanctum SPA usage, also set:
 
-## License
+```env
+SANCTUM_STATEFUL_DOMAINS=localhost:3000,127.0.0.1:3000
+SESSION_DOMAIN=localhost
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## API Overview
+
+Base URL example (local): `http://localhost:8000/api`
+
+Auth:
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/logout` (Sanctum)
+- `GET /api/user` (Sanctum)
+
+Cloudinary Keys (Sanctum):
+
+- `GET /api/keys/cloudinary`
+- `POST /api/keys/cloudinary`
+- `GET /api/keys/cloudinary/{id}`
+- `PUT /api/keys/cloudinary/{id}`
+- `DELETE /api/keys/cloudinary/{id}`
+
+Public Keys (Sanctum):
+
+- `GET /api/keys/public`
+- `POST /api/keys/public`
+- `GET /api/keys/public/{id}`
+- `PUT /api/keys/public/{id}`
+- `DELETE /api/keys/public/{id}`
+
+Cloudinary Files (Bearer: public key):
+
+- `POST /api/cloudinary/upload`
+- `GET /api/cloudinary/files`
+- `DELETE /api/cloudinary/files`
+
+OAuth Routes:
+
+- `GET /auth/google/redirect`
+- `GET /auth/google/callback`
+
+## Running Tests
+
+```bash
+php artisan test
+```
+
+## Shared Hosting (Subdirectory)
+
+If you deploy under `/home/meraj/public_html/cloudify/api`:
+
+1. Keep the repository root `.htaccess` file so requests are rewritten into `public/`.
+2. Set the app URL with subdirectory path.
+
+```env
+APP_URL=https://your-domain.com/cloudify/api
+```
+
+3. Clear cached config/routes:
+
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan cache:clear
+```
+
+## Notes
+
+- Keep sensitive secrets in `.env` only.
+- Use HTTPS in production.
+- Regenerate and rotate tokens/keys if exposed.
