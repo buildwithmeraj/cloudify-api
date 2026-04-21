@@ -4,11 +4,11 @@ Cloudify API is a Laravel-based backend for authentication, API key management, 
 
 ## Live Frontend
 
-- https://cloudify.meraj.pro
+- https://cloudify-delta.vercel.app/
 
 ## Docs
 
-- https://cloudify.meraj.pro/docs
+- https://cloudify-delta.vercel.app/docs
 
 ## Features
 
