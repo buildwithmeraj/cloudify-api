@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\cloudinary;
+namespace App\Http\Controllers\Api\Cloudinary;
 
 use App\Http\Controllers\Controller;
 use App\Models\CloudinaryApiKeys;
@@ -19,7 +19,8 @@ class CloudinaryFilesController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'images' => 'required|array',
+            'images' => 'required|array|min',
+            'images.*' => 'required|file|mimes:jpg,jpeg,png,webp,gif,svg,avif',
         ]);
 
         // authenticate via public key

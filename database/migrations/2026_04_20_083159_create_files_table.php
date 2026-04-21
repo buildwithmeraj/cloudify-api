@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('folder')->nullable();
             $table->json('raw_response')->nullable();
             $table->timestamps();
-
             $table->index('user_id');
             $table->index('cloudinary_api_key_id');
             $table->index('public_id');
@@ -39,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('files');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cloudinary_api_keys', function (Blueprint $table) {
             $table->id();
-            $table->text('user_id')->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('name');
             $table->string('key', 64)->unique();
             $table->string('secret', 64)->unique();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('cloudinary_api_keys');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('public_api_keys', function (Blueprint $table) {
             $table->id();
-            $table->text('user_id')->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('key', 64)->unique();
             $table->text('name');
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('public_api_keys');
     }
 };

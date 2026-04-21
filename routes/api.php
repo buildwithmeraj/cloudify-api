@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use \App\Http\Controllers\Api\Keys\CloudinaryController;
 use \App\Http\Controllers\Api\Keys\PublicKeysController;
-use \App\Http\Controllers\Api\cloudinary\CloudinaryFilesController;
+use \App\Http\Controllers\Api\Cloudinary\CloudinaryFilesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,18 +25,18 @@ Route::middleware('auth:sanctum')->group(function () {
     })->name('logout');
 
     // cloudinary keys routes
-    Route::get('/keys/cloudinary', [CloudinaryController::class, 'getKeys'])->name('cloudinary-keys.get');
-    Route::post('/keys/cloudinary', [CloudinaryController::class, 'addKey'])->name('cloudinary-keys.add');
-    Route::get('/keys/cloudinary/{id}', [CloudinaryController::class, 'getKey'])->name('cloudinary-keys.getKey');
-    Route::put('/keys/cloudinary/{id}', [CloudinaryController::class, 'updateKey'])->name('cloudinary-keys.updateKey');
-    Route::delete('/keys/cloudinary/{id}', [CloudinaryController::class, 'deleteKey'])->name('cloudinary-keys.deleteKey');
+    Route::get('/keys/cloudinary', [CloudinaryController::class, 'getCloudinaryKeys'])->name('cloudinary-keys.getCloudinaryKeys');
+    Route::post('/keys/cloudinary', [CloudinaryController::class, 'addCloudinaryKey'])->name('cloudinary-keys.addCloudinaryKey');
+    Route::get('/keys/cloudinary/{id}', [CloudinaryController::class, 'getCloudinaryKey'])->name('cloudinary-keys.getCloudinaryKey');
+    Route::put('/keys/cloudinary/{id}', [CloudinaryController::class, 'updateCloudinaryKey'])->name('cloudinary-keys.updateCloudinaryKey');
+    Route::delete('/keys/cloudinary/{id}', [CloudinaryController::class, 'deleteCloudinaryKey'])->name('cloudinary-keys.deleteCloudinaryKey');
 
     // public keys routes
-    Route::get('/keys/public', [PublicKeysController::class, 'getKeys'])->name('cloudinary-keys.get');
-    Route::post('/keys/public', [PublicKeysController::class, 'addKey'])->name('cloudinary-keys.add');
-    Route::get('/keys/public/{id}', [PublicKeysController::class, 'getKey'])->name('cloudinary-keys.getKey');
-    Route::put('/keys/public/{id}', [PublicKeysController::class, 'updateKey'])->name('cloudinary-keys.updateKey');
-    Route::delete('/keys/public/{id}', [PublicKeysController::class, 'deleteKey'])->name('cloudinary-keys.deleteKey');
+    Route::get('/keys/public', [PublicKeysController::class, 'getPublicKeys'])->name('cloudinary-keys.getPublicKeys');
+    Route::post('/keys/public', [PublicKeysController::class, 'addPublicKey'])->name('cloudinary-keys.addPublicKey');
+    Route::get('/keys/public/{id}', [PublicKeysController::class, 'getPublicKey'])->name('cloudinary-keys.getPublicKey');
+    Route::put('/keys/public/{id}', [PublicKeysController::class, 'updatePublicKey'])->name('cloudinary-keys.updatePublicKey');
+    Route::delete('/keys/public/{id}', [PublicKeysController::class, 'deletePublicKey'])->name('cloudinary-keys.deletePublicKey');
 
 
 });

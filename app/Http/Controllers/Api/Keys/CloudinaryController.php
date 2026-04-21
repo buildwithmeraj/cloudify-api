@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CloudinaryController extends Controller
 {
-    public function getKeys()
+    public function getCloudinaryKeys()
     {
         // get all keys for the authenticated user
         $keys = CloudinaryApiKeys::where('user_id', Auth::guard('sanctum')->id())->get();
         return response()->json($keys);
     }
 
-    public function addKey(Request $request)
+    public function addCloudinaryKey(Request $request)
     {
         // validate the request
         $validate = $request->validate([
@@ -33,7 +33,7 @@ class CloudinaryController extends Controller
         }
         return response()->json(['message' => 'Method not allowed'], 405);
     }
-    public function getKey(Request $request)
+    public function getCloudinaryKey(Request $request)
     {
         // get the key for the authenticated user
         $key = CloudinaryApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $request->id)->first();
@@ -44,7 +44,7 @@ class CloudinaryController extends Controller
         return response()->json($key);
     }
 
-    public function updateKey(Request $request)
+    public function updateCloudinaryKey(Request $request)
     {
         // get the key for the authenticated user
         $key = CloudinaryApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $request->id)->first();
@@ -60,7 +60,7 @@ class CloudinaryController extends Controller
         return response()->json($key);
     }
 
-    public function deleteKey($id)
+    public function deleteCloudinaryKey($id)
     {
         // get the key for the authenticated user
         $key = CloudinaryApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $id)->first();

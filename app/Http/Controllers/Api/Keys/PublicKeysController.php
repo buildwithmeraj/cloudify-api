@@ -10,14 +10,14 @@ use Illuminate\Support\Str;
 
 class PublicKeysController extends Controller
 {
-    public function getKeys()
+    public function getPublicKeys()
     {
         // get all keys for the authenticated user
         $keys = PublicApiKeys::where('user_id', Auth::guard('sanctum')->id())->get();
         return response()->json($keys);
     }
 
-    public function addKey(Request $request)
+    public function addPublicKey(Request $request)
     {
         // validate the request
         $validate = $request->validate([
@@ -34,7 +34,7 @@ class PublicKeysController extends Controller
         return response()->json(['message' => 'Method not allowed'], 405);
     }
 
-    public function getKey(Request $request)
+    public function getPublicKey(Request $request)
     {
         // get the key for the authenticated user
         $key = PublicApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $request->id)->first();
@@ -44,7 +44,7 @@ class PublicKeysController extends Controller
         return response()->json($key);
     }
 
-    public function updateKey(Request $request)
+    public function updatePublicKey(Request $request)
     {
         // get the key for the authenticated user
         $key = PublicApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $request->id)->first();
@@ -60,7 +60,7 @@ class PublicKeysController extends Controller
         return response()->json($key);
     }
 
-    public function deleteKey($id)
+    public function deletePublicKey($id)
     {
         // get the key for the authenticated user
         $key = PublicApiKeys::where('user_id', Auth::guard('sanctum')->id())->where('id', $id)->first();
